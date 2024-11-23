@@ -6,12 +6,13 @@ import os
 import requests
 from werkzeug.utils import secure_filename
 
-# Load environment variables
-load_dotenv()
+# Conditionally load environment variables from .env when not on Railway
+if not os.getenv("RAILWAY_ENVIRONMENT"):
+    load_dotenv()
 
 # Create Flask app and configure secret key
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY")  # Secure key loaded from .env
+app.secret_key = os.getenv("FLASK_SECRET_KEY")  # Secure key loaded from environment
 
 # Define upload folder and make sure it exists
 UPLOAD_FOLDER = 'uploads'
@@ -19,7 +20,10 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Set up OpenAI credentials
-openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+openai_api_key = os.getenv("OPENAI_API_KEY")
+if not openai_api_key:
+    raise ValueError("Missing OPENAI_API_KEY environment variable")
+openai_client = OpenAI(api_key=openai_api_key)
 
 # Route to render the main page with the form
 @app.route('/index')
@@ -280,4 +284,3 @@ if __name__ == '__main__':
         app.run(host='0.0.0.0', port=os.getenv("PORT", 5000))
     else:  # If not on Railway, use the local debug server
         app.run(debug=True)
-
