@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <title>Tattoo Pricing Quote</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            background: #121212;
+            color: #000000; /* Set text color to black */
+            padding-top: 70px; /* Prevent content from being hidden behind the navbar */
+        }
+
+        .background-image {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto; /* Allow vertical scrolling */
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            animation: fadeIn 1s ease-in-out; /* Adding fade-in animation */
+        }
+
+        .quote-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            animation: slideInUp 1s ease-in-out; /* Adding slide-in animation */
+        }
+
+        .remove-quote {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .remove-quote:hover {
+            background-color: darkred;
+        }
+
+        #add-quote, #book-now {
+            animation: fadeIn 1.5s ease-in-out; /* Fade-in animation for buttons */
+        }
+
+        /* Responsive layout */
+        @media screen and (max-width: 768px) {
+            .form-container {
+                width: 90%;
+                margin: 10px auto;
+            }
+
+            .quote-section {
+                padding: 10px;
+            }
+
+            label {
+                display: block;
+                margin-top: 10px;
+                font-weight: bold;
+                color: #000000;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .form-container {
+                width: 95%;
+                margin: 10px auto;
+            }
+
+            input[type="number"],
+            select,
+            button {
+                width: calc(100% - 10px);
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            label {
+                font-size: 0.9em; /* Slightly smaller label font size for better fit on small screens */
+                color: #000000; /* Set label color to black */
+            }
+
+            .title {
+                font-size: 1.5em;
+                text-align: center;
+                color: #000000;
+                margin-bottom: 15px;
+                font-weight: bold;
+            }
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <div class="background-image" id="background-image">
+        <div class="form-container animate__animated animate__fadeIn">
+            <h1 class="title animate__animated animate__fadeInDown">Tattoo Pricing Quote</h1>
+            <div id="quote-sections">
+                <div class="quote-section animate__animated animate__fadeInUp">
+                    <form class="tattoo-form">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" class="height" name="height" min="1" required>
+
+                        <label for="width">Width (cm)</label>
+                        <input type="number" class="width" name="width" min="1" required>
+
+                        <label for="location">Location on Body</label>
+                        <select class="location" name="location">
+                            <option value="arm">Arm</option>
+                            <option value="leg">Leg</option>
+                            <option value="back">Back</option>
+                            <option value="chest">Chest</option>
+                            <option value="neck">Neck</option>
+                            <option value="ribcage">Ribcage</option>
+                            <option value="hand">Hand</option>
+                            <option value="foot">Foot</option>
+                        </select>
+
+                        <label for="style">Tattoo Style</label>
+                        <select class="style" name="style">
+                            <option value="outline_simple">Outline Simple</option>
+                            <option value="outline_detailed">Outline Detailed</option>
+                            <option value="outline_shading_simple">Outline + Simple Shading</option>
+                            <option value="outline_shading_detailed">Outline + Detailed Shading</option>
+                            <option value="outline_color_simple">Outline + Color Simple</option>
+                            <option value="outline_color_detailed">Outline + Colour Detailed</option>
+                            <option value="realism">Realism Black n Grey</option>
+                            <option value="color_realism">Color Realism</option>
+                        </select>
+
+                        <!-- Artist Selection -->
+                        <label for="artist">Choose Your Artist</label>
+                        <select class="artist" name="artist">
+                            <option value="Artist Z">Artist Z</option>
+                            <option value="Artist Y">Artist Y</option>
+                            <option value="Artist X">Artist X</option>
+                        </select>
+
+                        <button type="button" class="get-quote animate__animated animate__pulse">Get Quote</button>
+                        <button type="button" class="remove-quote" onclick="removeQuoteSection(this)">Remove Quote</button>
+                    </form>
+
+                    <div class="quote-output">
+                        <p><strong>Quote:</strong> <span class="quote"></span></p>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="add-quote" class="animate__animated animate__fadeInUp">Add Another Quote</button>
+            <button type="button" id="book-now" style="display: none;" class="animate__animated animate__fadeInUp">Enquire Now</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('add-quote').addEventListener('click', function() {
+            const quoteSections = document.getElementById('quote-sections');
+            const newQuoteSection = quoteSections.firstElementChild.cloneNode(true);
+            newQuoteSection.querySelector('.quote').textContent = "";
+            quoteSections.appendChild(newQuoteSection);
+        });
+
+        function removeQuoteSection(button) {
+            const quoteSection = button.closest('.quote-section');
+            if (document.getElementsByClassName('quote-section').length > 1) {
+                quoteSection.remove();
+            } else {
+                alert("You must have at least one quote section.");
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('get-quote')) {
+                const quoteSection = event.target.closest('.quote-section');
+                const height = quoteSection.querySelector('.height').value;
+                const width = quoteSection.querySelector('.width').value;
+                const location = quoteSection.querySelector('.location').value;
+                const style = quoteSection.querySelector('.style').value;
+
+                if (height && width && style) {
+                    fetch('/generate_quote', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ height, width, location, style }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.quote) {
+                            quoteSection.querySelector('.quote').textContent = data.quote;
+                            document.getElementById('book-now').style.display = 'block';
+                        } else {
+                            quoteSection.querySelector('.quote').textContent = data.error || "Error generating quote.";
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+            }
+        });
+
+        document.getElementById('book-now').addEventListener('click', function() {
+            // Gather all quotes and store in sessionStorage
+            const quotes = [];
+            document.querySelectorAll('.quote-section').forEach(section => {
+                const height = section.querySelector('.height').value;
+                const width = section.querySelector('.width').value;
+                const location = section.querySelector('.location').value;
+                const style = section.querySelector('.style').value;
+                const artist = section.querySelector('.artist').value;
+                const quote = section.querySelector('.quote').textContent;
+
+                quotes.push({ height, width, location, style, artist, quote });
+            });
+
+            sessionStorage.setItem('quotes', JSON.stringify(quotes));
+
+            // Navigate to booking page
+            window.location.href = '/book';
+        });
+    </script>
+</body>
+</html>

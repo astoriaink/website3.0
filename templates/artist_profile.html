@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <title>{% block title %}Artist Profiles - TattooHub{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            background: #121212;
+            color: #f5f5f5;
+        }
+
+        .profile-wrapper {
+            max-width: 1200px;
+            margin: 160px auto; /* Increased margin to move content lower */
+            padding: 60px 20px;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-header h2 {
+            font-size: 2.5em;
+            color: #ffffff;
+        }
+
+        .profiles-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .profile-card {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            flex: 1;
+            min-width: 280px;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .profile-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .profile-username {
+            font-size: 1.8em;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .profile-bio {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            color: #b0b0b0;
+        }
+
+        .instagram-link {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            background-color: transparent;
+            padding: 15px 30px;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .instagram-link:hover {
+            background-color: #0bc518;
+            color: white;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+
+        /* Responsive layout */
+        @media screen and (max-width: 768px) {
+            .profile-wrapper {
+                padding: 40px 20px;
+                margin-top: 140px; /* Adjusted margin for better spacing */
+            }
+
+            .profiles-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .profile-card {
+                margin-bottom: 30px;
+                width: 90%;
+            }
+
+            .profile-header h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .profile-wrapper {
+                padding: 20px;
+                margin-top: 160px; /* Further adjusted margin for mobile */
+            }
+
+            .profile-header h2 {
+                font-size: 1.8em;
+            }
+
+            .profile-card {
+                width: 95%;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .profile-card img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .profile-username {
+                font-size: 1.5em;
+            }
+
+            .profile-bio {
+                font-size: 1em;
+            }
+
+            .instagram-link {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Animation keyframes for fadeIn and slideInUp */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="background-image">
+    <div id="particles-js"></div>
+    <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_5qzslmrp.json" background="transparent" speed="1" style="width: 100%; height: 100%; position: fixed; z-index: -1;" loop autoplay></lottie-player>
+    {% include 'navbar.html' %}
+
+    <!-- Artist Profiles Section -->
+    <div class="profile-wrapper">
+        <div class="profile-header">
+            <h2>Meet Our Artists</h2>
+        </div>
+        <div class="profiles-container animate__animated animate__fadeInUp">
+            <!-- Artist Profile 1 -->
+            <div class="profile-card animate__animated animate__zoomIn">
+                <img src="{{ url_for('static', filename='artist_profile_picture.jpg') }}" alt="Profile Picture" class="profile-picture animate__animated animate__zoomIn">
+                <h2 class="profile-username animate__animated animate__fadeInUp">Z</h2>
+                <p class="profile-bio animate__animated animate__fadeInUp">🗡️ Free consultations to bring your tattoo ideas to life.<br>
+                    🧿 15 years of experience creating meaningful ink.<br>
+                    ✍🏽 Custom tattoo designs tailored to you, or bring your own.<br>
+                    📲 DM me to start your tattoo journey.</p>
+                <a href="https://www.instagram.com/z.tatz/" target="_blank" class="instagram-link animate__animated animate__pulse">Visit Instagram Profile</a>
+            </div>
+
+            <!-- Artist Profile Placeholder 1 -->
+            <div class="profile-card animate__animated animate__zoomIn">
+                <div class="profile-picture-placeholder animate__animated animate__fadeIn"></div>
+                <h2 class="profile-username animate__animated animate__fadeInUp">Artist Name</h2>
+                <p class="profile-bio animate__animated animate__fadeInUp">Profile details coming soon.</p>
+            </div>
+
+            <!-- Artist Profile Placeholder 2 -->
+            <div class="profile-card animate__animated animate__zoomIn">
+                <div class="profile-picture-placeholder animate__animated animate__fadeIn"></div>
+                <h2 class="profile-username animate__animated animate__fadeInUp">Artist Name</h2>
+                <p class="profile-bio animate__animated animate__fadeInUp">Profile details coming soon.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script>
+        // Initialize WOW.js for animation on scroll
+        new WOW().init();
+    </script>
+</body>
+
+</html>

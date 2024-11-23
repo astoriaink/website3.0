@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <title>Book Your Tattoo Appointment</title>
+    <style>
+        .background-image {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 800px;
+            width: 100%;
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+        }
+        .preferred-dates {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .summary {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .summary p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        .photo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .delete-photo {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .thumbnail {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        #photo-previews {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <div class="background-image">
+        <div class="form-container">
+            <h1 class="title">Book Your Tattoo Appointment</h1>
+            <div id="quotes-summary"></div> <!-- Container for all quotes -->
+            <form id="booking-form" enctype="multipart/form-data">
+                <!-- Hidden inputs to include the data in the form submission -->
+                <div id="hidden-inputs"></div>
+
+                <label for="client-email">Your Email</label>
+                <input type="email" id="client-email" name="clientEmail" placeholder="Enter your email" required>
+
+                <label for="additional-details">Your Tattoo Details</label>
+                <textarea id="additional-details" name="additionalDetails" placeholder="Describe your tattoo idea and dates you prefer for booking..."></textarea>
+
+                <label for="photo">Upload Reference Photos (optional)</label>
+                <div id="photo-previews"></div> <!-- Container for image previews -->
+
+                <button type="button" id="upload-more">Upload Photos</button>
+                <div id="additional-photos"></div>
+
+                <div class="preferred-dates">
+                    <label for="preferred-dates">Preferred Dates</label>
+                    <input type="text" id="preferred-dates" name="preferredDates" placeholder="Select preferred dates">
+                </div>
+
+                <button type="submit" id="submit-booking">
+                    <span id="submit-text">Submit Booking Request</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Initialize Flatpickr for preferred dates
+        flatpickr("#preferred-dates", {
+            mode: "multiple",
+            dateFormat: "d-m-Y",
+            altInput: true,
+            altFormat: "F j, Y"
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Retrieve quote data from sessionStorage
+            const storedQuotes = sessionStorage.getItem('quotes');
+            if (storedQuotes) {
+                const quotes = JSON.parse(storedQuotes);
+                const quotesSummaryContainer = document.getElementById('quotes-summary');
+                const hiddenInputsContainer = document.getElementById('hidden-inputs');
+
+                quotes.forEach((quote, index) => {
+                    // Create a new summary section for each quote
+                    const quoteSummary = document.createElement('div');
+                    quoteSummary.classList.add('summary');
+                    quoteSummary.innerHTML = `
+                        <h3>Quote #${index + 1}</h3>
+                        <p><strong>Height:</strong> ${quote.height} cm</p>
+                        <p><strong>Width:</strong> ${quote.width} cm</p>
+                        <p><strong>Location on Body:</strong> ${quote.location}</p>
+                        <p><strong>Tattoo Style:</strong> ${quote.style}</p>
+                        <p><strong>Estimated Price:</strong> ${quote.quote}</p>
+                        <p><strong>Artist:</strong> ${quote.artist}</p>
+                    `;
+                    quotesSummaryContainer.appendChild(quoteSummary);
+
+                    // Add hidden inputs for each quote to the form
+                    hiddenInputsContainer.innerHTML += `
+                        <input type="hidden" name="height_${index}" value="${quote.height}">
+                        <input type="hidden" name="width_${index}" value="${quote.width}">
+                        <input type="hidden" name="location_${index}" value="${quote.location}">
+                        <input type="hidden" name="style_${index}" value="${quote.style}">
+                        <input type="hidden" name="quote_${index}" value="${quote.quote}">
+                        <input type="hidden" name="artist_${index}" value="${quote.artist}">
+                    `;
+                });
+            }
+        });
+
+        let photoCount = 0;
+        const maxPhotos = 10;
+
+        // Add more photo input fields dynamically
+        document.getElementById('upload-more').addEventListener('click', function() {
+            if (photoCount >= maxPhotos) {
+                alert("You can only upload up to 10 photos.");
+                return;
+            }
+
+            const photoContainer = document.createElement('div');
+            photoContainer.classList.add('photo-container');
+
+            const newInput = document.createElement('input');
+            newInput.type = 'file';
+            newInput.name = 'photo';
+            newInput.accept = 'image/*';
+            newInput.multiple = true;
+            newInput.addEventListener('change', previewImages);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('delete-photo');
+            deleteButton.onclick = function() {
+                removePhoto(deleteButton);
+            };
+
+            photoContainer.appendChild(newInput);
+            photoContainer.appendChild(deleteButton);
+
+            document.getElementById('additional-photos').appendChild(photoContainer);
+            photoCount++;
+        });
+
+        // Function to remove photo input
+        function removePhoto(button) {
+            const photoContainer = button.parentElement;
+            const photoPreviewId = photoContainer.querySelector('input[type="file"]').dataset.previewId;
+            const thumbnail = document.getElementById(photoPreviewId);
+            if (thumbnail) {
+                thumbnail.remove();
+            }
+            photoContainer.remove();
+            photoCount--;
+        }
+
+        // Function to preview images
+        function previewImages(event) {
+            const photoPreviews = document.getElementById('photo-previews');
+            Array.from(event.target.files).forEach((file, index) => {
+                if (photoCount >= maxPhotos) {
+                    alert("You can only upload up to 10 photos.");
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('thumbnail');
+                    const previewId = `thumbnail-${Date.now()}-${index}`;
+                    img.id = previewId;
+                    event.target.dataset.previewId = previewId;
+                    photoPreviews.appendChild(img);
+                    photoCount++;
+                }
+                reader.readAsDataURL(file);
+            });
+        }
+
+        document.getElementById('booking-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(this);
+            const submitButton = document.getElementById('submit-booking');
+            const submitText = document.getElementById('submit-text');
+
+            // Get all photo file inputs, including dynamically added ones
+            const photoInputs = document.querySelectorAll('input[type="file"][name="photo"]');
+            photoInputs.forEach(input => {
+                Array.from(input.files).forEach(file => {
+                    formData.append('photos[]', file);
+                });
+            });
+
+            // Disable the button and show loading text
+            submitButton.disabled = true;
+            submitText.textContent = "Submitting...";
+
+            fetch('/submit_booking', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Your booking request has been submitted successfully!");
+                    window.location.href = '/artist_profile'; // Redirect to the artist profile page
+                } else {
+                    alert("Error submitting booking request. Please try again.");
+                    // Re-enable the button in case of error
+                    submitButton.disabled = false;
+                    submitText.textContent = "Submit Booking Request";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred. Please try again.");
+                // Re-enable the button in case of error
+                submitButton.disabled = false;
+                submitText.textContent = "Submit Booking Request";
+            });
+        });
+    </script>
+</body>
+</html>

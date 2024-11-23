@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <title>About Us - TattooHub</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            background: #121212;
+            color: #f5f5f5;
+        }
+
+        .tools-wrapper {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 60px 20px;
+        }
+
+        .tools-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tools-header h2 {
+            font-size: 2.5em;
+            color: #ffffff;
+        }
+
+        .tools-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .tool-card {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            flex: 1;
+            min-width: 300px;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .tool-card img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .tool-title {
+            font-size: 2em;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .tool-description {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #b0b0b0;
+        }
+
+        .tool-link {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            background-color: transparent;
+            padding: 15px 30px;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .tool-link:hover {
+            background-color: #0bc518;
+            color: white;
+        }
+
+        .upcoming-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            animation: slideInUp 1s ease-in-out;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+
+        /* Animation keyframes for fadeIn and slideInUp */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.85);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-button {
+            background-color: transparent;
+            border: none;
+            font-size: 30px;
+            color: var(--text-color);
+            cursor: pointer;
+            display: none; /* Hidden by default, visible on smaller screens */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links.active {
+            display: block; /* Make links visible when active on mobile */
+        }
+
+        .nav-item {
+            color: white;
+            background-color: transparent;
+            padding: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+        }
+
+        .nav-item:hover {
+            background-color: #444;
+            color: #ff6347;
+        }
+
+        .nav-book-now {
+            background-color: #ffa726;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-left: auto;
+        }
+
+        .nav-book-now:hover {
+            background-color: #ff8c00;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .menu-button {
+                display: block; /* Show hamburger button on smaller screens */
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 15px;
+            }
+
+            .nav-links {
+                display: none; /* Hide links by default on mobile */
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.9);
+                width: 100%;
+                padding: 15px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                border-radius: 10px;
+            }
+
+            .nav-links.active {
+                display: flex; /* Show links when toggled on */
+            }
+
+            .nav-item {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .nav-book-now {
+                display: none; /* Hide 'Book Now' button on mobile screens */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .form-container,
+            .output-container {
+                width: 95%;
+            }
+
+            input[type="number"],
+            input[type="file"],
+            input[type="text"],
+            select,
+            textarea {
+                width: calc(100% - 8px);
+                padding: 6px;
+                font-size: 0.9em;
+            }
+
+            .navbar {
+                padding: 10px 10px; /* Reduce padding on small screens */
+            }
+
+            .tools-header h2 {
+                font-size: 1.8em;
+            }
+
+            .tool-card {
+                padding: 15px; /* Adjust padding for small screens */
+            }
+
+            .tool-title {
+                font-size: 1.4em;
+            }
+
+            .tool-description {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="particles-js"></div>
+    <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_5qzslmrp.json" background="transparent" speed="1" style="width: 100%; height: 100%; position: fixed; z-index: -1;" loop autoplay></lottie-player>
+    {% include 'navbar.html' %}
+    
+    <div class="background-image" id="background-image">
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+        <!-- Tools Section -->
+        <div class="tools-wrapper">
+            <div class="tools-header">
+                <h2>Explore Our Tools</h2>
+            </div>
+            <div class="tools-container animate__animated animate__fadeInUp">
+                <!-- AI Tattoo Design Generator -->
+                <div class="tool-card animate__animated animate__zoomIn">
+                    <img src="/static/images/ai_tattoo_generator.jpg" alt="AI Tattoo Design Generator">
+                    <h2 class="tool-title">AI Tattoo Design Generator</h2>
+                    <p class="tool-description">
+                        Discover unique and custom tattoo ideas that match your vision. Generate stunning designs with the click of a button.
+                    </p>
+                    <a href="/generator" class="tool-link">Try it Now</a>
+                </div>
+
+                <!-- Tattoo Pricing Quote Generator -->
+                <div class="tool-card animate__animated animate__zoomIn">
+                    <img src="/static/images/tattoo_pricing_quote.jpg" alt="Tattoo Pricing Quote Generator">
+                    <h2 class="tool-title">Tattoo Pricing Quote Generator</h2>
+                    <p class="tool-description">
+                        Get a clear estimate for your next tattoo based on size, style, and placement. Plan your tattoo project with confidence.
+                    </p>
+                    <a href="/index" class="tool-link">Get a Quote</a>
+                </div>
+
+                <!-- Book Your Artist -->
+                <div class="tool-card animate__animated animate__zoomIn">
+                    <img src="/static/artist_profile_picture.jpg" alt="Book Your Artist">
+                    <h2 class="tool-title">Book Your Artist</h2>
+                    <p class="tool-description">
+                        Find talented artists who match your tattoo style and start your journey today. Booking is just a click away.
+                    </p>
+                    <a href="/book" class="tool-link">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script>
+        // Initialize WOW.js for animation on scroll
+        new WOW().init();
+    </script>
+</body>
+
+</html>
