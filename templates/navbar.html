@@ -1,13 +1,12 @@
 <nav class="navbar">
     <div class="logo-container">
-        <a href="#" class="logo">AI</a>
+        <a href="#" class="logo">ASTORIA INK</a>
     </div>
     <button class="menu-button" onclick="toggleNavbar(event)">☰</button>
     <div class="nav-links">
         <a href="{{ url_for('homepage') }}" class="nav-item">Home</a>
         <a href="{{ url_for('generator') }}" class="nav-item">AI Generator</a>
         <a href="{{ url_for('index') }}" class="nav-item">Price</a>
-        <a href="{{ url_for('artist_profile') }}" class="nav-item">Artist Profile</a>
     </div>
     <a href="{{ url_for('book') }}" class="nav-book-now">Book Now</a>
 </nav>
@@ -77,22 +76,28 @@
     }
 
     .nav-item:hover {
-        color: #ff6347;
+        color: #636363;
     }
 
     .nav-book-now {
-        background-color: #ffa726;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        text-decoration: none;
-        transition: background-color 0.3s, transform 0.2s;
-    }
+    background-color: #4c4945;
+    color: white;
+    padding: 10px 50px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+
+    /* Adjust positioning */
+    margin-left: auto; /* Pushes the button all the way to the right */
+    margin-right: 50px; /* Adds space from the right side of the navbar */
+    position: relative; /* To ensure it stays properly aligned */
+}
+
 
     .nav-book-now:hover {
-        background-color: #ff8c00;
+        background-color: #000000;
         transform: translateY(-2px);
     }
 

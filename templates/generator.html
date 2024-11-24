@@ -18,13 +18,13 @@
             background: url("{{ url_for('static', filename='background.jpg') }}") no-repeat center center fixed;
             background-size: cover;
             color: #f5f5f5;
-            padding-top: 70px; /* Prevent content from being hidden behind the navbar */
+            padding-top: 30px; /* Prevent content from being hidden behind the navbar */
         }
 
         .main-content {
             max-width: 1200px; /* Adjusted max-width for consistency */
             margin: 60px auto;
-            padding: 60px 20px;
+            padding: 30px 20px;
             background-color: rgba(18, 18, 18, 0.9);
             border-radius: 10px;
         }
@@ -98,7 +98,7 @@
         }
 
         label {
-            color: #000000; /* Brighten label text for better contrast */
+            color: #4c4b4b; /* Brighten label text for better contrast */
             font-weight: bold;
             margin-top: 10px;
         }
@@ -140,7 +140,7 @@
         @media screen and (max-width: 480px) {
             .container {
                 padding: 15px;
-                margin-top: 80px; /* Adjust margin to fit smaller screens */
+                margin-top: 50px; /* Adjust margin to fit smaller screens */
             }
 
             .form-container,
@@ -222,7 +222,7 @@
         <div class="main-content">
             <!-- Tools Section -->
             <div class="tools-header">
-                <h2>Tattoo Generator</h2>
+                <h2>TATTOO IDEA GENERATOR</h2>
             </div>
 
             <div class="tools-container animate__animated animate__fadeInUp">
@@ -305,7 +305,7 @@
                         <input type="radio" name="blackAndGrey" value="yes"> Yes
                         <input type="radio" name="blackAndGrey" value="no" checked> No
 
-                        <button type="button" id="generate-tattoo">Generate Tattoo Design</button>
+                        <button type="button" id="generate-tattoo">CREATE TATTOO IDEA</button>
                     </form>
                 </div>
 
@@ -313,7 +313,7 @@
                 <div id="output-container" class="output-container animate__animated animate__fadeInRight">
                     <img id="generated-image" src="{{ url_for('static', filename='placeholder.png') }}" alt="Generated Tattoo Design">
                     <div id="loading-spinner" class="loading-spinner">
-                        Loading...
+                        CREATING...
                     </div>
                     <p id="error-message" style="color: red; display: none;"></p>
                 </div>
@@ -362,89 +362,89 @@
             });
         });
     </script>
-    <script type="module">
-        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
-        Chatbot.init({
-            chatflowid: "f580d357-59c2-4c32-a2cb-62ef0e179748",
-            apiHost: "https://flowiseai-railway-production-bb30.up.railway.app",
-            chatflowConfig: {
-                // topK: 2
+ <script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+    Chatbot.init({
+        chatflowid: "f580d357-59c2-4c32-a2cb-62ef0e179748",
+        apiHost: "https://flowiseai-railway-production-bb30.up.railway.app",
+        chatflowConfig: {
+            // topK: 2
+        },
+        theme: {
+            button: {
+                backgroundColor: "#ffffff", // White button
+                right: 20,
+                bottom: 20,
+                size: 48, // small | medium | large | number
+                dragAndDrop: true,
+                iconColor: "black", // Adjusted to be more visible on a white background
+                customIconSrc: "/static/images/bot1.PNG",
+                autoWindowOpen: {
+                    autoOpen: true, // parameter to control automatic window opening
+                    openDelay: 2, // Optional parameter for delay time in seconds
+                    autoOpenOnMobile: false, // parameter to control automatic window opening in mobile
+                },
             },
-            theme: {
-                button: {
+            tooltip: {
+                showTooltip: true,
+                tooltipMessage: 'Let’s discuss ideas!',
+                tooltipBackgroundColor: 'black',
+                tooltipTextColor: 'white',
+                tooltipFontSize: 16,
+            },
+            chatWindow: {
+                showTitle: true,
+                title: "FABLE AI",
+                titleAvatarSrc: '/static/images/bot1.PNG',
+                showAgentMessages: true,
+                welcomeMessage: "Hi! I am Fable, I am here to help you create your story. Would you like to chat about your ideas?.",
+                errorMessage: 'This is a custom error message',
+                backgroundColor: "transparent", // Use transparent to allow the image to cover the full background
+                backgroundImage: '/static/images/background-chat.png', // Set your background image for full coverage
+                height: 700,
+                width: 400,
+                fontSize: 16,
+                starterPromptFontSize: 15,
+                clearChatOnReload: false, // If set to true, the chat will be cleared when the page reloads.
+                botMessage: {
+                    backgroundColor: "rgba(255, 255, 255, 0.8)", // Set a semi-transparent background to ensure text is readable on the image
+                    textColor: "#303235",
+                    showAvatar: true,
+                    avatarSrc: "/static/images/usericon.png",
+                },
+                userMessage: {
                     backgroundColor: "#3B81F6",
-                    right: 20,
-                    bottom: 20,
-                    size: 48, // small | medium | large | number
-                    dragAndDrop: true,
-                    iconColor: "white",
-                    customIconSrc: "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
-                    autoWindowOpen: {
-                        autoOpen: true, //parameter to control automatic window opening
-                        openDelay: 2, // Optional parameter for delay time in seconds
-                        autoOpenOnMobile: false, //parameter to control automatic window opening in mobile
-                        },
+                    textColor: "#ffffff",
+                    showAvatar: true,
+                    avatarSrc: "/static/images/usericon.png",
                 },
-                tooltip: {
-                    showTooltip: true,
-                    tooltipMessage: 'Lets discuss ideas!',
-                    tooltipBackgroundColor: 'black',
-                    tooltipTextColor: 'white',
-                    tooltipFontSize: 16,
+                textInput: {
+                    placeholder: 'Type your question',
+                    backgroundColor: '#ffffff',
+                    textColor: '#303235',
+                    sendButtonColor: '#3B81F6',
+                    maxChars: 300,
+                    maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 300 characters.',
+                    autoFocus: true,
+                    sendMessageSound: true,
+                    receiveMessageSound: true,
                 },
-                chatWindow: {
-                    showTitle: true,
-                    title: "Z 2.0 AI Clone",
-                    titleAvatarSrc: 'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg',
-                    showAgentMessages: true,
-                    welcomeMessage: "Hi! I am Nova, an AI assistant designed to help you with your tattoo ideas. Tell me what ideas you have so far.",
-                    errorMessage: 'This is a custom error message',
-                    backgroundColor: "#ffffff",
-                    backgroundImage: 'enter image path or link', // If set, this will overlap the background color of the chat window.
-                    height: 700,
-                    width: 400,
-                    fontSize: 16,
-                    //starterPrompts: ['What is a bot?', 'Who are you?'], // It overrides the starter prompts set by the chat flow passed
-                    starterPromptFontSize: 15,
-                    clearChatOnReload: false, // If set to true, the chat will be cleared when the page reloads.
-                    botMessage: {
-                        backgroundColor: "#f7f8ff",
-                        textColor: "#303235",
-                        showAvatar: true,
-                        avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png",
-                    },
-                    userMessage: {
-                        backgroundColor: "#3B81F6",
-                        textColor: "#ffffff",
-                        showAvatar: true,
-                        avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
-                    },
-                    textInput: {
-                        placeholder: 'Type your question',
-                        backgroundColor: '#ffffff',
-                        textColor: '#303235',
-                        sendButtonColor: '#3B81F6',
-                        maxChars: 300,
-                        maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 300 characters.',
-                        autoFocus: true, // If not used, autofocus is disabled on mobile and enabled on desktop. true enables it on both, false disables it on both.
-                        sendMessageSound: true,
-                        // sendSoundLocation: "send_message.mp3", // If this is not used, the default sound effect will be played if sendSoundMessage is true.
-                        receiveMessageSound: true,
-                        // receiveSoundLocation: "receive_message.mp3", // If this is not used, the default sound effect will be played if receiveSoundMessage is true. 
-                    },
-                    feedback: {
-                        color: '#303235',
-                    },
-                    footer: {
-                        textColor: '#303235',
-                        text: 'Built by',
-                        company: 'Z',
-                        companyLink: 'https://flowiseai.com',
-                    }
+                feedback: {
+                    color: '#303235',
+                },
+                footer: {
+                    textColor: '#f5f5f5', // Set the footer text color to match better with the background
+                    backgroundColor: "transparent", // Use transparent to let the background image show through
+                    text: 'YOUR STORY, YOUR INK',
+                    company: '',
+                    companyLink: 'https://flowiseai.com',
                 }
             }
-        })
-    </script>
+        }
+    })
+</script>
+
+    
     
 </body>
 
