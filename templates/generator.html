@@ -25,7 +25,7 @@
             max-width: 1200px; /* Adjusted max-width for consistency */
             margin: 60px auto;
             padding: 30px 20px;
-            background-color: rgba(18, 18, 18, 0.9);
+            /* background-color: rgba(18, 18, 18, 0.9); */
             border-radius: 10px;
         }
 
@@ -54,7 +54,7 @@
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto; /* Center the content */
-            background-color: rgba(7, 7, 7, 0.8);
+            /* background-color: rgba(7, 7, 7, 0.8); */
             border-radius: 10px;
             animation: fadeIn 1s ease-in-out; /* Adding fade-in animation */
         }
@@ -79,8 +79,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 1px solid #ddd;
-            background-color: #fff;
+            border: 6px solid #000000;
+            background-color: #1e1e1e;
             animation: slideInRight 1s ease-in-out; /* Animation for output entry */
         }
 
@@ -98,7 +98,7 @@
         }
 
         label {
-            color: #4c4b4b; /* Brighten label text for better contrast */
+            color: #8c8b8b; /* Brighten label text for better contrast */
             font-weight: bold;
             margin-top: 10px;
         }
@@ -108,7 +108,7 @@
         }
 
         p {
-            color: #000000; /* Change paragraph text to white for better readability */
+            color: #ffffff; /* Change paragraph text to white for better readability */
         }
 
         /* Responsive layout */
@@ -309,7 +309,7 @@
                     </form>
                 </div>
 
-                <!-- Output Section -->
+                <!-- Output Section - Moved below the form -->
                 <div id="output-container" class="output-container animate__animated animate__fadeInRight">
                     <img id="generated-image" src="{{ url_for('static', filename='placeholder.png') }}" alt="Generated Tattoo Design">
                     <div id="loading-spinner" class="loading-spinner">
@@ -400,7 +400,7 @@
                 welcomeMessage: "Hi! I am Fable, I am here to help you create your story. Would you like to chat about your ideas?.",
                 errorMessage: 'This is a custom error message',
                 backgroundColor: "transparent", // Use transparent to allow the image to cover the full background
-                backgroundImage: '/static/images/background-chat.png', // Set your background image for full coverage
+                backgroundImage: '/static/images/background-chat.PNG', // Set your background image for full coverage
                 height: 700,
                 width: 400,
                 fontSize: 16,
@@ -410,7 +410,7 @@
                     backgroundColor: "rgba(255, 255, 255, 0.8)", // Set a semi-transparent background to ensure text is readable on the image
                     textColor: "#303235",
                     showAvatar: true,
-                    avatarSrc: "/static/images/usericon.png",
+                    avatarSrc: "/static/images/icon.png",
                 },
                 userMessage: {
                     backgroundColor: "#3B81F6",

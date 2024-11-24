@@ -29,66 +29,6 @@ body, html {
     overflow-y: auto;
 }
 
-/* Container Styles */
-.main-content, .container {
-    max-width: 1200px;
-    margin: 60px auto;
-    padding: 30px 20px;
-    border-radius: 10px;
-}
-
-.main-content {
-    background-color: rgba(18, 18, 18, 0.9);
-}
-
-.container {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: flex-start;
-    background-color: rgba(7, 7, 7, 0.8);
-    animation: fadeIn 1s ease-in-out;
-}
-
-/* Form and Output Containers */
-.form-container, .output-container {
-    flex: 1;
-    min-width: 300px;
-    max-width: 600px;
-    margin: 0 auto 20px;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.form-container {
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation: slideInLeft 1s ease-in-out;
-}
-
-.output-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
-    background-color: #fff;
-    animation: slideInRight 1s ease-in-out;
-}
-
-.output-container img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    border-radius: 10px;
-}
-
-.loading-spinner {
-    font-size: 20px;
-    color: #333;
-    display: none;
-}
-
 /* Header and Text Styles */
 .tools-header {
     text-align: center;
@@ -107,11 +47,11 @@ body, html {
 .title {
     font-size: 1.5em;
     margin-bottom: 15px;
-    color: var(--primary-color);
+    color: #8c8b8b;
 }
 
 p, label {
-    color: #000; /* Improve contrast */
+    color: #8c8b8b; /* Improve contrast */
     font-weight: bold;
 }
 
@@ -326,13 +266,14 @@ button:disabled {
         }
 
         .form-container {
-            background: rgba(255, 255, 255, 0.9);
+            background: #1e1e1e;
             padding: 20px;
             border-radius: 10px;
             width: 100%;
             max-width: 500px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin: 20px auto;
+            border: 6px solid #000000;
             animation: fadeIn 1s ease-in-out; /* Adding fade-in animation */
         }
 
