@@ -15,17 +15,15 @@
             padding: 0;
             font-family: Arial, sans-serif;
             overflow-x: hidden; /* Prevent horizontal scroll */
-            /* background: url("{{ url_for('static', filename='background.jpg') }}") no-repeat center center fixed; */
-            background-size: cover;
+            background-color: #121212; /* Dark background for consistency */
             color: #f5f5f5;
-            padding-top: 30px; /* Prevent content from being hidden behind the navbar */
+            padding-top: 20px; /* Space for navbar */
         }
 
         .main-content {
-            max-width: 1200px; /* Adjusted max-width for consistency */
+            max-width: 1200px;
             margin: 60px auto;
             padding: 30px 20px;
-            /* background-color: rgba(18, 18, 18, 0.9); */
             border-radius: 10px;
         }
 
@@ -35,43 +33,35 @@
         }
 
         .tools-header h2 {
-            font-size: 2.5em; /* Increased font size for better emphasis */
+            font-size: 2em;
             color: #ffffff;
-        }
-
-        .tools-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
         }
 
         .container {
             display: flex;
-            flex-direction: row;
+            flex-wrap: wrap; /* Allow wrapping for mobile devices */
             justify-content: space-between;
             align-items: flex-start;
             padding: 20px;
             max-width: 1200px;
-            margin: 0 auto; /* Center the content */
-            /* background-color: rgba(7, 7, 7, 0.8); */
+            margin: 0 auto;
             border-radius: 10px;
-            animation: fadeIn 1s ease-in-out; /* Adding fade-in animation */
+            animation: fadeIn 1s ease-in-out;
         }
 
         .form-container,
         .output-container {
-            flex: 1;
-            min-width: 300px;
+            flex: 1 1 45%; /* Make the containers take 45% width on large screens */
             max-width: 600px;
-            margin: 0 auto;
+            min-width: 300px;
+            margin: 20px auto;
             padding: 20px;
             border-radius: 10px;
-            background-color: f5f5f5;
+            background-color: #1e1e1e;
         }
 
         .form-container {
-            animation: slideInLeft 1s ease-in-out; /* Animation for form entry */
+            animation: slideInLeft 1s ease-in-out;
         }
 
         .output-container {
@@ -79,105 +69,99 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 6px solid #000000;
-            background-color: #1e1e1e;
-            animation: slideInRight 1s ease-in-out; /* Animation for output entry */
+            border: 2px solid #000;
+            animation: slideInRight 1s ease-in-out;
         }
 
         .output-container img {
             max-width: 100%;
-            max-height: 100%;
+            max-height: 300px;
             object-fit: contain;
             border-radius: 10px;
         }
 
-        .loading-spinner {
-            font-size: 20px;
-            color: #333;
-            display: none;
-        }
-
         label {
-            color: #8c8b8b; /* Brighten label text for better contrast */
+            color: #8c8b8b;
             font-weight: bold;
             margin-top: 10px;
         }
 
         input::placeholder {
-            color: #b0b0b0; /* Lighten placeholder text for better readability */
+            color: #b0b0b0;
         }
 
-        p {
-            color: #ffffff; /* Change paragraph text to white for better readability */
+        button {
+            background-color: #4b4949;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        /* Responsive layout */
+        button:hover {
+            background-color: #000000;
+        }
+
+        /* Responsive Styles */
         @media screen and (max-width: 768px) {
             .container {
-                flex-direction: column;
-                align-items: center;
-                margin: 60px auto 0;
+                flex-direction: column; /* Stack items vertically */
                 padding: 10px;
             }
 
             .form-container,
             .output-container {
-                margin-right: 0;
-                margin-bottom: 20px;
-                min-width: unset;
-                width: 100%;
+                width: 100%; /* Full width for mobile devices */
+                margin: 10px 0;
+            }
+
+            .tools-header h2 {
+                font-size: 1.5em; /* Reduce header font size */
+            }
+
+            input,
+            select,
+            button {
+                font-size: 1em; /* Adjust input and button font size */
+                padding: 10px;
             }
 
             label {
-                font-size: 1em; /* Adjust label font size for readability on smaller screens */
-            }
-
-            .tools-header {
-                margin-top: 50px; /* Adjusted to prevent overlap */
+                font-size: 1em;
             }
         }
 
         @media screen and (max-width: 480px) {
             .container {
                 padding: 15px;
-                margin-top: 50px; /* Adjust margin to fit smaller screens */
             }
 
             .form-container,
             .output-container {
-                width: 95%;
-                margin-bottom: 20px;
-            }
-
-            input[type="text"],
-            select,
-            input[type="radio"] {
-                width: calc(100% - 10px);
-                padding: 10px;
-                font-size: 0.9em;
-            }
-
-            label {
-                font-size: 0.9em; /* Slightly smaller label font size for better fit on small screens */
-            }
-
-            .output-container {
+                width: 100%; /* Make containers take full width */
                 padding: 15px;
             }
 
-            .title {
-                font-size: 1.5em; /* Adjust title font size for better readability */
-                text-align: center;
+            input,
+            select,
+            button {
+                font-size: 0.9em; /* Smaller font size for better fit */
+                padding: 8px;
+            }
+
+            .tools-header h2 {
+                font-size: 1.2em;
             }
 
             .output-container img {
-                width: 100%;
-                max-width: 300px;
-                height: auto;
+                max-height: 200px;
             }
         }
 
-        /* Animation keyframes */
+        /* Animations */
         @keyframes fadeIn {
             from {
                 opacity: 0;
