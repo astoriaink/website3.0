@@ -1,7 +1,7 @@
 import base64
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
-from openai import OpenAI
+import openai  # Import the OpenAI module directly
 import os
 import requests
 from werkzeug.utils import secure_filename
@@ -23,7 +23,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
     raise ValueError("Missing OPENAI_API_KEY environment variable")
-openai_client = OpenAI(api_key=openai_api_key)
+openai.api_key = openai_api_key
+
+
 
 # Route to render the main page with the form
 @app.route('/index')
@@ -63,12 +65,12 @@ def generate_tattoo():
         prompt = f"""{customer_prompt}. {color_prompt} {black_and_grey_prompt}. In the style of {custom.lower() if style == "I'll choose my own!" else style.lower()}"""
 
         # Call OpenAI to generate image
-        response = openai_client.images.generate(
-            model="dall-e-3",
+        response = openai.Image.create(
             prompt=prompt,
             n=1,
             size=size,
         )
+
 
         # Retrieve image URL from the response
         image_url = response.data[0].url
