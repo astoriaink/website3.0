@@ -2,7 +2,7 @@
     --primary-color: #4b4949;
     --secondary-color: #000000;
     --text-color: #ffffff;
-    --background-color: #001219;
+    --background-color: #121212;
 }
 
 /* General Styles */
@@ -12,21 +12,20 @@ body, html {
     height: 100%;
     font-family: Arial, sans-serif;
     overflow-x: hidden; /* Prevent horizontal scroll */
-    background-color: #000000; /* Set the background color to black */
+    background-color: var(--background-color); /* Set the background color */
     color: var(--text-color);
-    padding-top: 30px; /* Prevent content from being hidden behind the navbar */
+    padding-top: 70px; /* Prevent content from being hidden behind the navbar */
 }
 
 .background-image {
-    background-color: #000000; /* Set the background color to black */
-    min-height: 100vh;
+    background-color: var(--background-color); /* Set the background color */
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    overflow-y: auto;
+    overflow-y: auto; /* Allow vertical scrolling */
 }
-
 
 /* Header and Text Styles */
 .tools-header {
@@ -35,7 +34,7 @@ body, html {
 }
 
 .tools-header h2, .title {
-    color: #ffffff;
+    color: var(--text-color);
     text-align: center;
 }
 
@@ -134,27 +133,26 @@ button:disabled {
     color: #ff6347;
 }
 
+/* Form Container */
+.form-container {
+    background: var(--primary-color);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    animation: fadeIn 1s ease-in-out; /* Adding fade-in animation */
+}
 
-/* Responsive Styles */
+/* Responsive Adjustments */
 @media screen and (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        align-items: center;
-        margin: 60px auto 0;
-        padding: 10px;
+    .form-container {
+        width: 90%;
+        margin: 10px auto;
     }
 
-    .form-container, .output-container {
-        min-width: unset;
-        width: 100%;
-    }
-
-    label, .tools-header, .tools-header h2 {
-        font-size: 1em;
-    }
-    
-    .tools-header {
-        margin-top: 50px;
+    .tools-header h2, label {
+        font-size: 1em; /* Adjust font size for smaller screens */
     }
 
     .nav-links {
@@ -184,36 +182,30 @@ button:disabled {
 }
 
 @media screen and (max-width: 480px) {
-    .container {
-        padding: 15px;
-        margin-top: 50px;
-    }
-
-    .form-container, .output-container {
+    .form-container {
         width: 95%;
+        margin: 10px auto;
     }
 
-    input[type="text"], select, input[type="radio"] {
+    input[type="number"],
+    select,
+    button {
         width: calc(100% - 10px);
         padding: 10px;
         font-size: 0.9em;
     }
 
     label {
-        font-size: 0.9em;
+        font-size: 0.9em; /* Slightly smaller label font size for better fit on small screens */
     }
 
     .title {
         font-size: 1.5em;
-    }
-
-    .output-container img {
-        width: 100%;
-        max-width: 300px;
+        text-align: center;
     }
 }
 
-/* Animations */
+/* Animation Keyframes */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -223,149 +215,13 @@ button:disabled {
     }
 }
 
-@keyframes slideInLeft {
+@keyframes slideInUp {
     from {
-        transform: translateX(-100px);
+        transform: translateY(20px);
         opacity: 0;
     }
     to {
-        transform: translateX(0);
+        transform: translateY(0);
         opacity: 1;
     }
 }
-
-@keyframes slideInRight {
-    from {
-        transform: translateX(100px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden; /* Prevent horizontal scroll */
-            background: #121212;
-            color: #000000; /* Set text color to black */
-            padding-top: 70px; /* Prevent content from being hidden behind the navbar */
-        }
-
-        .background-image {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow-y: auto; /* Allow vertical scrolling */
-        }
-
-        .form-container {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin: 20px auto;
-            border: 6px solid #000000;
-            animation: fadeIn 1s ease-in-out; /* Adding fade-in animation */
-        }
-
-        .quote-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            animation: slideInUp 1s ease-in-out; /* Adding slide-in animation */
-        }
-
-        .remove-quote {
-            background-color: red;
-            color: white;
-            border: none;
-            padding: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .remove-quote:hover {
-            background-color: darkred;
-        }
-
-        #add-quote, #book-now {
-            animation: fadeIn 1.5s ease-in-out; /* Fade-in animation for buttons */
-        }
-
-        /* Responsive layout */
-        @media screen and (max-width: 768px) {
-            .form-container {
-                width: 90%;
-                margin: 10px auto;
-            }
-
-            .quote-section {
-                padding: 10px;
-            }
-
-            label {
-                display: block;
-                margin-top: 10px;
-                font-weight: bold;
-                color: #000000;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .form-container {
-                width: 95%;
-                margin: 10px auto;
-            }
-
-            input[type="number"],
-            select,
-            button {
-                width: calc(100% - 10px);
-                padding: 10px;
-                font-size: 0.9em;
-            }
-
-            label {
-                font-size: 0.9em; /* Slightly smaller label font size for better fit on small screens */
-                color: #000000; /* Set label color to black */
-            }
-
-            .title {
-                font-size: 1.5em;
-                text-align: center;
-                color: #000000;
-                margin-bottom: 15px;
-                font-weight: bold;
-            }
-        }
-
-        /* Animation keyframes */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-    
