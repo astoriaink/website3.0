@@ -12,15 +12,13 @@ body, html {
     height: 100%;
     font-family: Arial, sans-serif;
     overflow-x: hidden; /* Prevent horizontal scroll */
-    background: url("{{ url_for('static', filename='background.jpg') }}") no-repeat center center fixed;
-    background-size: cover;
+    background-color: #000000; /* Set the background color to black */
     color: var(--text-color);
     padding-top: 30px; /* Prevent content from being hidden behind the navbar */
 }
 
 .background-image {
-    background: url('/static/background.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background-color: #000000; /* Set the background color to black */
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -28,6 +26,7 @@ body, html {
     padding: 20px;
     overflow-y: auto;
 }
+
 
 /* Header and Text Styles */
 .tools-header {
