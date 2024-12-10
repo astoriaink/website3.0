@@ -127,7 +127,7 @@ location_modifiers = {
     "neck": 0.35, "ribcage": 0.2, "hand": 0.25, "foot": 0.15
 }
 
-# Feature modifiers for different styles
+# Feature modifiers for different style
 style_modifiers = {
     "outline_simple": 0.0, "outline_detailed": 0.1,
     "outline_shading_simple": 0.15, "outline_shading_detailed": 0.20,
